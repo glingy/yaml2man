@@ -1,0 +1,27 @@
+heading:
+  executable: slackjp
+  date: 2021 January 02
+  version: 0.0.1
+  title: slackjp man page
+
+name: Slack JSON Parser
+
+options:
+  h:
+    alias: help
+    description: Opens the help/usage command menu.  Program exits after this function.
+  version:
+    description: Prints the version number of the exectuable.  Program exits after this function.
+  filename:
+    type: argument
+  d:
+    alias: download
+    argument: [all, images, attachments]
+    description:
+    or: D
+  
+
+exit:
+  - 0: Program exited appropriately and all tasks finished succesfully.
+
+authors:

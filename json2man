@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+
+import yaml
+
+try:
+  file = open('example.yml', 'r')
+  out = open('test.1','w')
+  docs = yaml.safe_load(file)
+
+  def ensure(obj, error):
+    if obj is None:
+      print("The " + error + " field is required. See the example yaml file for details.")
+      raise AssertionError
+    return obj
+
+  def heading():
+    heading = ensure(docs.get('heading'), 'heading')
+    name = ensure(docs.get('name'), 'name')
+    out.write(".\\\" Manpage for {}\n".format(name))
+    executable = ensure(heading.get('executable'), 'heading.executable')
+    date = ensure(heading.get('date'), 'heading.date')
+    version = ensure(heading.get('version'), 'heading.version')
+    title = heading.get('title', executable + ' man page')
+    out.write(".TH {} 1 \"{}\" \"{}\" \"{}\"\n\n\n".format(executable, date, version, title))
+    out.write(".SH NAME\n")
+    out.write("{} \\- {}".format(executable, name))
+
+  def parseOption(option):
+    if len(key) == 1 and option.get('arguments') == None:
+      
+      else if option.get('arguments') == None:
+        long_options[key] = '[\\fB \\-\\-{} fR\\]'.format(key)
+      else if len(key) == 1:
+        long_options[key] = '[\\fB \\-{} fR\\]'.format(key)
+        long_options.append('\\-\\-' + key)
+
+  def checkOr(option):
+    if option.get('or') == None return
+    alternate = option.get('or')
+    if
+
+  def options():
+    short_options = []
+    long_options = {}
+
+    options = docs.get('options', {})
+    print(options)
+    for key, option in options.items():
+      print(key, len(key))
+      if len(key) == 1 and option.get('arguments') == None:
+        short_options.append(key)
+      else if option.get('arguments') == None:
+        long_options[key] = '[\\fB \\-\\-{} fR\\]'.format(key)
+      else if len(key) == 1:
+        long_options[key] = '[\\fB \\-{} fR\\]'.format(key)
+        long_options.append('\\-\\-' + key)
+    print(short_options)
+    short_options.sort()
+    short = ''.join(short_options)
+    short = '\\-' + short if len(short) > 0
+    long = ' '.join(long_options)
+    out.write("{} [\\fB {} fR\\] {}\n"
+
+  heading()
+  options()
+except AssertionError:
+  print("Exception")
+  out.close()
+  file.close()
+except FileNotFoundError:
+  print(sys.exc_info())
+  print('Could not find file or yaml was not parseable.')
